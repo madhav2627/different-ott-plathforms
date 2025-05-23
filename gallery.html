@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Images</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            justify-content: center;
+            max-width: 800px;
+            margin: auto;
+        }
+        .card {
+            background: white;
+            color: black;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #ffcc00;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SURVEY IMAGES</h1>
+        <div class="grid" id="imageGrid">
+            <div class="card">
+                <img src="chanakya.jpg" alt="r.chanakya">
+                <p><strong>r.chanakya</strong><br>Founder</p>
+            </div>
+            <div class="card">
+                <img src="akash.jpg" alt="s.akash">
+                <p><strong>s.akash</strong><br>Manager</p>
+            </div>
+            <div class="card">
+                <img src="madhav.jpg" alt="madhav">
+                <p><strong>y.madhav</strong><br>Co-Manager</p>
+            </div>
+            <div class="card">
+                <img src="sriram.jpg" alt="sriram">
+                <p><strong>y.sriram</strong><br>Designer</p>
+            </div>
+        </div>
+        <button onclick="shuffleImages()">Shuffle Images</button>
+        <div class="footer">REALLYGREATSITE.COM</div>
+    </div>
+    <script>
+        function shuffleImages() {
+            let grid = document.getElementById('imageGrid');
+            let cards = Array.from(grid.children);
+            cards.sort(() => Math.random() - 0.5);
+            grid.innerHTML = '';
+            cards.forEach(card => grid.appendChild(card));
+        }
+    </script>
+</body>
+</html>

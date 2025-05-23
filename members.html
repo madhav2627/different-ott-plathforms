@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Members</title>
+    <style>
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: radial-gradient(circle, #1e3c72, #2a5298);
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            animation: fadeIn 1s ease-in-out;
+            color: white;
+            overflow: hidden;
+            perspective: 1200px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        h1, h2 {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(45deg, cyan, magenta, yellow);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: neonGlow 3s infinite alternate;
+        }
+        
+        @keyframes neonGlow {
+            from { text-shadow: 0 0 5px cyan, 0 0 10px magenta; }
+            to { text-shadow: 0 0 20px yellow, 0 0 30px cyan; }
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        li {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 255, 255, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            display: inline-block;
+            min-width: 220px;
+            text-align: center;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+            animation: wave 3s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        @keyframes wave {
+            0% { transform: translateY(-3px); }
+            50% { transform: translateY(3px); }
+            100% { transform: translateY(-3px); }
+        }
+        
+        li:hover {
+            transform: scale(1.1) rotateY(15deg);
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.6), rgba(0, 100, 255, 0.6));
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.8);
+            cursor: pointer;
+        }
+        
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particleCanvas"></canvas>
+    <h1>Members of this Project</h1>
+    <ul id="members-list">
+        <li class="member">R. Chanakya<br>232U1A3393</li>
+        <li class="member">S. Akash<br>232U1A3394</li>
+        <li class="member">Yegnavajjula V S K Madhav Prasad<br>232U1A33C8</li>
+        <li class="member">Y. Sriram<br>232U1A33D1</li>
+    </ul>
+    <h2 >This Project was Guided by Our Respected HOD sir</h2>
+    <ul>
+        <li class="mentor">P. Nagendra Kumar<br>Professor and HOD</li>
+    </ul>
+    <script>
+        const canvas = document.getElementById("particleCanvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        let particles = [];
+        
+        class Particle {
+            constructor(x, y, size, speedX, speedY) {
+                this.x = x;
+                this.y = y;
+                this.size = size;
+                this.speedX = speedX;
+                this.speedY = speedY;
+            }
+            draw() {
+                ctx.fillStyle = "rgba(0, 255, 255, 0.8)";
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = "cyan";
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+            }
+        }
+        
+        function initParticles() {
+            for (let i = 0; i < 50; i++) {
+                let size = Math.random() * 5 + 2;
+                let x = Math.random() * canvas.width;
+                let y = Math.random() * canvas.height;
+                let speedX = (Math.random() - 0.5) * 2;
+                let speedY = (Math.random() - 0.5) * 2;
+                particles.push(new Particle(x, y, size, speedX, speedY));
+            }
+        }
+        
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        
+        initParticles();
+        animateParticles();
+        
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            initParticles();
+        });
+    </script>
+</body>
+</html>
